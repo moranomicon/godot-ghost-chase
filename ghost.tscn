@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://crgltcynbgmcl"]
+
+[ext_resource type="Script" path="res://Ghost.gd" id="1_xrtmd"]
+[ext_resource type="Texture2D" uid="uid://d1kekkdoyo6ua" path="res://mob.png" id="2_wbcvt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jlq4y"]
+atlas = ExtResource("2_wbcvt")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gb60f"]
+atlas = ExtResource("2_wbcvt")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ge4mf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jlq4y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gb60f")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2uk1d"]
+height = 24.0
+
+[node name="Ghost" type="RigidBody2D" groups=["mobs"]]
+position = Vector2(0, 1)
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_xrtmd")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_ge4mf")
+frame_progress = 0.0041558
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_2uk1d")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

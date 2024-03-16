@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://bg74t84t2lu8w"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_vi24t"]
+[ext_resource type="Texture2D" uid="uid://c1e13kewnaukk" path="res://grimreaper.png" id="2_sqf6w"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gbpvw"]
+atlas = ExtResource("2_sqf6w")
+region = Rect2(0, 0, 29, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2cr5"]
+atlas = ExtResource("2_sqf6w")
+region = Rect2(0, 32, 29, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s24a1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gbpvw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2cr5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pcfnt"]
+radius = 13.0
+height = 36.0
+
+[node name="Player" type="Area2D"]
+scale = Vector2(3, 3)
+script = ExtResource("1_vi24t")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_s24a1")
+frame_progress = 0.0698137
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0)
+shape = SubResource("CapsuleShape2D_pcfnt")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
